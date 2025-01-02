@@ -1,0 +1,4 @@
+(base) amberjiang@ambervalentinag full-stack-dapp % npx hardhat run scripts/deploy.js --network sepolia
+
+Multicall deployed to: 0xF045fF402e0eF4e47Ad43238e23C6a10B3677F9F
+Cinnamonroll deployed to: 0xdEd1e10711d4AD3Fb53f8975d52F8b6921C8Eb45
