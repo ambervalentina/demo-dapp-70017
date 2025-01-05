@@ -73,12 +73,18 @@ This project is the frontend interface for interacting with smart contracts on t
     - Perform Transfer: Directly send Ether and view the transaction receipt and summary.
 
 ## Workflow
-- clone the repository
+- open your own project folder eg `COMP70017`
 - `foundryup` (if you want to run foundry tests)
+- check the `remappings.txt`:
+  ```
+  forge-std/=lib/forge-std/src/
+  ds-test/=lib/ds-test/src/
+  ```
+- clone this repository
 
 | **contract** | **backend** | **frontend** |
 |--------------|-------------|--------------|
-| `cd full-stack-dapp`| `cd full-stack-dapp/backend` | `cd full-stack-dapp/frontend` |
+| `cd demo-dapp-repository`| `cd demo-dapp-repository/backend` | `cd demo-dapp-repository/frontend` |
 | `npm install`| `npm install`| `npm install`| 
 | `touch .env` | `node index.js` | `npm run dev` |
 | `npx hardhat compile`| keep running | paste http://localhost:5173/ into browser |
