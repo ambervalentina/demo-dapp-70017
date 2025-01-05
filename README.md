@@ -157,7 +157,7 @@ This project is the frontend interface for interacting with smart contracts on t
 
 | **contract** | **backend** | **frontend** |
 |--------------|-------------|--------------|
-| `cd demo-dapp-repository`| `cd demo-dapp-repository/backend` | `cd demo-dapp-repository/frontend` |
+| `cd demo-dapp-70017`| `cd demo-dapp-70017/backend` | `cd demo-dapp-70017/frontend` |
 | `npm install`| `npm install`| `npm install`| 
 | `touch .env` | `node index.js` | `npm run dev` |
 | `npx hardhat compile`| keep running | paste http://localhost:5173/ into browser |
