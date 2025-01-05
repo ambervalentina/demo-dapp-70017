@@ -4,10 +4,10 @@ This is the lecture notes for [COMP70017 Principles of Distributed Ledgers](http
 ## 💡 Smart contracts:
 <img align = "right" src="https://github.com/ambervalentina/demo-dapp-70017/blob/main/cinna.png" alt="Cinnamonroll Icon" width="50">
 
-- `multicall.sol`: Multicall3 contract for batching multiple on chain calls and handling concurrent requests, as provided in the lecture.
 - `Cinnamonroll.sol`: My own ERC20 token Cinnamonroll(CINA) deployed [here 🌐](https://sepolia.etherscan.io/token/0x9904934201ae05e44d0aedc339b408ec80172b9b) on Sepolia testing network, implementing ERC-20 token standard by inheriting properties from OpenZepplin ERC20 contract.
+- `multicall.sol`: Multicall3 contract for batching multiple on chain calls and handling concurrent requests, as provided in the lecture.
 
-| ** Tool/Library**      | **Purpose**                                        | **Description**                                       |
+| **Tool/Library**      | **Purpose**                                        | **Description**                                       |
 |------------------------|-----------------------------------------------------|-----------------------------------------------------------------|
 | **Solidity**           | Programming smart contracts                        | Language for Ethereum smart contracts |
 | **Hardhat**            | Contract development, testing, and deployment      | Plugins for deployment and backend/frontend interaction testing.   |
