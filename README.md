@@ -42,11 +42,84 @@ There are five endpoints:
 - `POST /api/transfer`: Transfer tokens.
 - `GET /api/events`: Fetch transfer events.
 - `POST /api/simulate`: Simulate transactions using Tenderly (requires API key and url from tenderly, `TENDER_API_KEY` and `TENDERLY_API_URL` need to be stored in `.env`).
+
 </br> `apiRoutes.js` collects all these endpoints from `scripts/tokenScripts.js`, `scripts/multicallScripts.js` and `scripts/eventScripts.js` and is called by `index.js` for server. 
 </br> To improve user experience in frontend, `scripts/utils/fetchAbi.js` will automatically generate function ABI for multicall query by inputing contract address and function name. This requires an Etherscan API where you can get [here](https://etherscan.io/myapikey) after creating an Etherscan account. Store the `ETHERSCAN_API_KEY` in `.env` before running the server.
 
 ### CURL testing example
+#### Check Token Balance
+```
+curl -X GET "http://localhost:5001/api/balance/0xYourAddress"
+```
+output:
+```
+{"balance":"100.0"}
+```
+#### Transfer Tokens
+```
+curl -X POST "http://localhost:5001/api/transfer" \
+     -H "Content-Type: application/json" \
+     -d '{"to": "0xRecipientAddress", "amount": "10"}'
+```
+output:
+```
+{"receipt":
+     {"_type":
+          // ....
+     }
+}
+```
+*notice that currently the token is unable to reach the target's address, instead it goes into the deployed contract. This function will be improve in the next version of the dApp.
+#### Multicall
+```
+curl -X POST "http://localhost:5001/api/multicall" \
+-H "Content-Type: application/json" \
+-d '{
+  "calls": [
+    {
+      "target": "0x9904934201AE05E44d0AEdC339b408EC80172b9b",
+      "functionName": "balanceOf",
+      "args": ["0x2E0Dc6117Da0B6C79c4d955b9fBe04FBA47acf71"]
+    },
+    {
+      "target": "0x9904934201AE05E44d0AEdC339b408EC80172b9b",
+      "functionName": "totalSupply",
+      "args": []
+    }
+  ]
+}'
 
+```
+output:
+```
+{"results":[{"success":true,"returnData":"100.0"},{"success":true,"returnData":"100.0"}]}
+```
+#### Simulate transfer
+```
+curl -X POST "http://localhost:5001/api/simulate" \
+-H "Content-Type: application/json" \
+-d '{
+  "from": "0x2E0Dc6117Da0B6C79c4d955b9fBe04FBA47acf71",
+  "to": "0x2E0Dc6117Da0B6C79c4d955b9fBe04FBA47acf71",
+  "amount": "10"
+}'
+```
+output:
+```
+{"logs":[{"address":"0x9904934201ae05e44d0aedc339b408ec80172b9b","topics":["0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef","0x0000000000000000000000002e0dc6117da0b6c79c4d955b9fbe04fba47acf71","0x0000000000000000000000002e0dc6117da0b6c79c4d955b9fbe04fba47acf71"],"data":"0x0000000000000000000000000000000000000000000000008ac7230489e80000"}]}
+```
+#### fetch event
+```
+curl -X GET "http://localhost:5001/api/events?fromBlock=1&toBlock=100" \
+-H "Content-Type: application/json"
+
+```
+output:
+```
+curl -X GET "http://localhost:5001/api/events?fromBlock=1&toBlock=100" \
+-H "Content-Type: application/json"
+
+```
 
 ## Frontend:
 This project is the frontend interface for interacting with smart contracts on the Ethereum blockchain. The interface is divided into two pages: query and transfer. The application is built using Vite, React, and Ethers.js for efficient performance and better user experience.
