@@ -10,7 +10,7 @@ This is the lecture notes for [COMP70017 Principles of Distributed Ledgers](http
   </br><code>multicall.sol</code>: Multicall3 contract for batching multiple on chain calls and handling concurrent requests, as provided in the lecture.
   </div>
   <div>
-    <img src="https://github.com/ambervalentina/demo-dapp-70017/blob/main/cinna.png" alt="Cinnamonroll Icon" width="100"><br>
+    <img src="https://github.com/ambervalentina/demo-dapp-70017/blob/main/cinna.png" alt="Cinnamonroll Icon" width="50"><br>
     <span style="font-size: smaller;">$ CINA</span>
   </div>
 </div>
