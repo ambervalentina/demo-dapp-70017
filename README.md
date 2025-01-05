@@ -1,21 +1,13 @@
 # Demo DApps: ERC20 token, Querying and Multicall
 This is the lecture notes for [COMP70017 Principles of Distributed Ledgers](https://www.imperial.ac.uk/computing/current-students/courses/70017/)
  guest lecture in the form of demo DApp. The project consist of 3 parts: two smart contracts, a simple backend and a Vite+React frontend. Currently the app could only be deployed to localhost (default port 5173) as a demo. 
-## Smart contracts:
-<div style="display: flex; align-items: center; justify-content: space-between;">
-  <div>
-    <code>Cinnamonroll.sol</code>: My own ERC20 token Cinnamonroll (CINA) deployed 
-    <a href="https://sepolia.etherscan.io/token/0x9904934201ae05e44d0aedc339b408ec80172b9b">here</a> 
-    on Sepolia testing network, implementing ERC-20 token standard by inheriting properties from OpenZeppelin ERC20 contract.
-  </br><code>multicall.sol</code>: Multicall3 contract for batching multiple on chain calls and handling concurrent requests, as provided in the lecture.
-  </div>
-  <div>
-    <img src="https://github.com/ambervalentina/demo-dapp-70017/blob/main/cinna.png" alt="Cinnamonroll Icon" width="50"><br>
-    <span style="font-size: smaller;">$ CINA</span>
-  </div>
-</div>
+## 💡 Smart contracts:
+<img align = "right" src="https://github.com/ambervalentina/demo-dapp-70017/blob/main/cinna.png" alt="Cinnamonroll Icon" width="50"><br>
 
-| **Tool/Library**      | **Purpose**                                        | **Description**                                       |
+- `multicall.sol`: Multicall3 contract for batching multiple on chain calls and handling concurrent requests, as provided in the lecture.
+- `Cinnamonroll.sol`: My own ERC20 token Cinnamonroll(CINA) deployed [here 🌐](https://sepolia.etherscan.io/token/0x9904934201ae05e44d0aedc339b408ec80172b9b) on Sepolia testing network, implementing ERC-20 token standard by inheriting properties from OpenZepplin ERC20 contract.
+
+| ** Tool/Library**      | **Purpose**                                        | **Description**                                       |
 |------------------------|-----------------------------------------------------|-----------------------------------------------------------------|
 | **Solidity**           | Programming smart contracts                        | Language for Ethereum smart contracts |
 | **Hardhat**            | Contract development, testing, and deployment      | Plugins for deployment and backend/frontend interaction testing.   |
@@ -34,7 +26,7 @@ Contracts are deployed and integrated into backend in this project, so it's impo
 Both of the contracts are deployed to Sepolia (a testing network for Ethereum) using hardhat. `Cinnamonroll.sol` is later verified for querying purpose. Deployment using hardhat requires a sepolia url (you can create one from Alchemy Dashboard) and your private key, both of `SEPOLIA_URL` and `PRIVATE_KEY` should be stored in an `.env` at root level of the app. A successful deployment will print two contracts' addresses. They should also be stored in `.env` at `CINA_ADDRESS` and `MUIT_ADDRESS` for backend applications. Contract ABIs are automatically stored to backend folder by a reconfiguration in `hardhat.config.js`.
 
 
-## Backend
+## 📂 Backend
 The backend provides APIs to interact with the Cinnamonroll ERC-20 token contract and the Multicall3 contract. It enables functionalities such as checking balances, transferring tokens, simulating transactions, querying events, and executing multicalls. 
 
 | **Tool/Library**       | **Purpose**                                | **Description**                                     |
@@ -131,7 +123,7 @@ curl -X GET "http://localhost:5001/api/events?fromBlock=1&toBlock=100" \
 
 ```
 
-## Frontend:
+## 🎨 Frontend:
 This project is the frontend interface for interacting with smart contracts on the Ethereum blockchain. The interface is divided into two pages: query and transfer. The application is built using Vite, React, and Ethers.js for efficient performance and better user experience.
 
 | **Tool/Library**       | **Purpose**                                | **Description**                                     |
@@ -155,7 +147,7 @@ This project is the frontend interface for interacting with smart contracts on t
     - Simulate Transaction: Enter sender and recipient addresses and an amount to simulate the transfer.
     - Perform Transfer: Directly send Ether and view the transaction receipt and summary.
 
-## Workflow
+## ⚙️ Workflow
 - open your own project folder eg `COMP70017`
 - `foundryup` (if you want to run foundry tests)
 - check the `remappings.txt`:
@@ -174,4 +166,12 @@ This project is the frontend interface for interacting with smart contracts on t
 | `npx hardhat run scripts/deploy.js --network sepolia` | open another terminal | |
 | record contract address | | |
 | `npx hardhat verify --network sepolia ERC20_CONTRACT_ADDRESS` | | |
+
+## 🚀 Future Improvements 🛠️
+- **Find a Better Backend Framework 🔧**
+integrate a more robust backend framework for improved scalability and performance
+- **Integrate Wallet Functionality 💳**
+add support for popular wallets like MetaMask or WalletConnect, enabling users to interact with their accounts directly 
+- **Allow Users to Deploy Their Own Tokens 🪙**
+provide a function that enables users through deploying their own ERC20 token directly from the webpage
 
