@@ -47,14 +47,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Deploy Smart Contracts
+      - name: Deploy Smart Contracts with Hardhat
         run: |
           cd contract
-          forge script scripts/Deploy.s.sol --rpc-url ${{ secrets.SEPOLIA_URL }} --private-key ${{ secrets.PRIVATE_KEY }}
+          npx hardhat run scripts/deploy.js --network sepolia
         env:
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
           SEPOLIA_URL: ${{ secrets.SEPOLIA_URL }}
-
+          
       - name: Start Backend
         run: |
           cd backend

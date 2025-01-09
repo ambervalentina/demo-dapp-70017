@@ -52,7 +52,7 @@ describe("Multicall and Event Fetching Tests", function () {
     // console.log(calls);
     const result = await multicall.aggregate3.staticCall(calls);
     // console.log(result);
-    expect(result.length).to.equal(50); // All calls should be processed
+    expect(result.length).to.equal(50);
   });
 
 
