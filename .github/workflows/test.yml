@@ -1,4 +1,4 @@
-name: CI
+name: CI/CD Pipeline
 
 on:
   push:
@@ -10,10 +10,7 @@ env:
 
 jobs:
   check:
-    strategy:
-      fail-fast: true
-
-    name: Foundry project
+    name: Foundry Project (CI)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -24,20 +21,53 @@ jobs:
         uses: foundry-rs/foundry-toolchain@v1
 
       - name: Show Forge version
-        run: |
-          forge --version
+        run: forge --version
 
       - name: Run Forge fmt
-        run: |
-          forge fmt --check
+        run: forge fmt --check
         id: fmt
 
       - name: Run Forge build
-        run: |
-          forge build --sizes
+        run: forge build --sizes
         id: build
 
       - name: Run Forge tests
-        run: |
-          forge test -vvv
+        run: forge test -vvv
         id: test
+
+  deploy:
+    name: Deploy Contracts and Backend/Frontend
+    runs-on: ubuntu-latest
+    needs: check
+    steps:
+      # Step 1: Checkout code
+      - uses: actions/checkout@v4
+
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # Step 3: Deploy contracts to Sepolia
+      - name: Deploy Smart Contracts
+        run: |
+          cd contract
+          forge script scripts/Deploy.s.sol --rpc-url ${{ secrets.SEPOLIA_URL }} --private-key ${{ secrets.PRIVATE_KEY }}
+        env:
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          SEPOLIA_URL: ${{ secrets.SEPOILIA_URL }}
+
+      # Step 4: Start backend
+      - name: Start Backend
+        run: |
+          cd backend
+          npm install
+          npm start &
+
+      # Step 5: Build frontend
+      - name: Build Frontend
+        run: |
+          cd frontend
+          npm install
+          npm run build
