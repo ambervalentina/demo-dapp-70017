@@ -22,11 +22,7 @@ contract OwnerTest is Test {
     function testBalanceOfNonExistentAccount() public view {
         address nonExistent = address(0xdead);
         uint256 balance = cinnamonroll.balanceOf(nonExistent);
-        assertEq(
-            balance,
-            0,
-            "Balance of a non-existent account should be zero"
-        );
+        assertEq(balance, 0, "Balance of a non-existent account should be zero");
     }
 
     function testOwnerCanMint() public {
@@ -69,11 +65,7 @@ contract WhenTransferringTokens is BaseSetup {
         console.log("When transferring tokens");
     }
 
-    function transferToken(
-        address from,
-        address to,
-        uint256 transferAmount
-    ) public returns (bool) {
+    function transferToken(address from, address to, uint256 transferAmount) public returns (bool) {
         vm.prank(from);
         return this.transfer(to, transferAmount);
     }
@@ -88,11 +80,7 @@ contract WhenAliceHasSufficientFunds is WhenTransferringTokens {
         _mint(alice, mintAmount);
     }
 
-    function itTransfersAmountCorrectly(
-        address from,
-        address to,
-        uint256 amount
-    ) public {
+    function itTransfersAmountCorrectly(address from, address to, uint256 amount) public {
         uint256 fromBalance = balanceOf(from);
         bool success = transferToken(from, to, amount);
 
@@ -119,27 +107,15 @@ contract WhenAliceHasSufficientFunds is WhenTransferringTokens {
         vm.prank(alice);
         bool success = this.transfer(bob, 0);
         assertTrue(success, "Transfer of zero tokens should succeed");
-        assertEq(
-            this.balanceOf(alice),
-            maxTransferAmount,
-            "Alice's balance should remain unchanged"
-        );
-        assertEq(
-            this.balanceOf(bob),
-            0,
-            "Bob's balance should remain unchanged"
-        );
+        assertEq(this.balanceOf(alice), maxTransferAmount, "Alice's balance should remain unchanged");
+        assertEq(this.balanceOf(bob), 0, "Bob's balance should remain unchanged");
     }
 
     function testTransferToSelf() public {
         vm.prank(alice);
         bool success = this.transfer(alice, 1e18);
         assertTrue(success, "Transfer to self should succeed");
-        assertEq(
-            this.balanceOf(alice),
-            maxTransferAmount,
-            "Alice's balance should remain unchanged"
-        );
+        assertEq(this.balanceOf(alice), maxTransferAmount, "Alice's balance should remain unchanged");
     }
 }
 
@@ -152,41 +128,19 @@ contract WhenAliceHasInsufficientFunds is WhenTransferringTokens {
         _mint(alice, mintAmount);
     }
 
-    function itRevertsTransfer(
-        address from,
-        address to,
-        uint256 amount,
-        string memory expRevertMessage
-    ) public {
+    function itRevertsTransfer(address from, address to, uint256 amount, string memory expRevertMessage) public {
         vm.expectRevert(abi.encodePacked(expRevertMessage));
         transferToken(from, to, amount);
     }
 
     function testCannotTransferMoreThanAvailable() public {
-        bytes memory invalid = abi.encodeWithSelector(
-            ERC20InsufficientBalance.selector,
-            alice,
-            mintAmount,
-            maxTransferAmount
-        );
-        itRevertsTransfer({
-            from: alice,
-            to: bob,
-            amount: maxTransferAmount,
-            expRevertMessage: string(invalid)
-        });
+        bytes memory invalid =
+            abi.encodeWithSelector(ERC20InsufficientBalance.selector, alice, mintAmount, maxTransferAmount);
+        itRevertsTransfer({from: alice, to: bob, amount: maxTransferAmount, expRevertMessage: string(invalid)});
     }
 
     function testCannotTransferToZero() public {
-        bytes memory invalid = abi.encodeWithSelector(
-            ERC20InvalidReceiver.selector,
-            address(0)
-        );
-        itRevertsTransfer({
-            from: alice,
-            to: address(0),
-            amount: mintAmount,
-            expRevertMessage: string(invalid)
-        });
+        bytes memory invalid = abi.encodeWithSelector(ERC20InvalidReceiver.selector, address(0));
+        itRevertsTransfer({from: alice, to: address(0), amount: mintAmount, expRevertMessage: string(invalid)});
     }
 }

@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "hardhat/console.sol";
 
 contract Cinnamonroll is ERC20, Ownable {
-    uint constant _initial_supply = 100 * (10 ** 18);
+    uint256 constant _initial_supply = 100 * (10 ** 18);
 
     constructor() ERC20("Cinnamonroll", "CINA") Ownable(msg.sender) {
         _mint(msg.sender, _initial_supply);
