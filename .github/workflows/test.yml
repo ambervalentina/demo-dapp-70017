@@ -47,13 +47,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Deploy Smart Contracts with Hardhat
-        run: |
-          cd contract
-          npx hardhat run scripts/deploy.js --network sepolia
-        env:
-          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-          SEPOLIA_URL: ${{ secrets.SEPOLIA_URL }}
+      # - name: Deploy Smart Contracts with Hardhat
+      #   run: |
+      #     cd contract
+      #     npx hardhat run scripts/deploy.js --network sepolia
+      #   env:
+      #     PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+      #     SEPOLIA_URL: ${{ secrets.SEPOLIA_URL }}
           
       - name: Start Backend
         run: |
